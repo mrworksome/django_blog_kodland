@@ -1,0 +1,100 @@
+{% include 'layout.html' with post_adding=post_add %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <main>
+        <section class="container my-5">
+            <div class="row">
+                <div class="col">
+                    <h2 class="h2-responsive font-weight-bold indigo-text">
+                        Добавить статью
+                    </h2>
+                    <form method="POST" class="mt-4" enctype="multipart/form-data"
+                          class="post-form">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        <div class="row my-2">
+                            <div class="col-8">
+                                {{ form.title }}
+                            </div>
+                            <div class="col my-auto">
+                                <button type="submit" class="btn btn-block btn-pink rounded-0">
+                                    Опубликовать
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row my-2">
+                            <div class="col-8">
+                                {{ form.about }}
+                            </div>
+
+                            <div class="col border mx-3 p-4 text-center h-100 text-center">
+                                <h2 class="h5-responsive font-weight-bold indigo-text">
+                                    Загрузить изображение
+                                </h2>
+                                <div class="input-group">
+                                    <input type="file" required name="file[]"
+                                           accept="image/jpeg,image/png,image/gif"
+                                           class="btn inputfile" id="files"
+                                           onchange="loadFile(event)"
+                                           aria-describedby="inputGroupFileAddon01">
+                                    <label class="btn mx-auto indigo white-text " for="files"
+                                           id="file_label">Выбрать</label>
+                                </div>
+                                <div id="output">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        let loadFile = function (event) {
+            let output = document.getElementById('output');
+            let newImg = document.createElement("img");
+            let _icon = document.createElement('i');
+            let icon_del = document.createElement('a');
+
+            let div = document.createElement('div')
+            output.insertBefore(div, null)
+            div.insertBefore(newImg, null)
+            icon_del.insertBefore(_icon, null);
+            div.insertBefore(icon_del, null)
+
+            newImg.src = URL.createObjectURL(event.target.files[0]);
+
+            newImg.onload = function () {
+                newImg.setAttribute('height', "212")
+                newImg.setAttribute('width', "217")
+                newImg.setAttribute('id', "deleted-icon");
+
+                div.setAttribute('id', "uploaded_image")
+                icon_del.setAttribute('id', "deleted-icon");
+                icon_del.setAttribute('href', "javascript:void(0);remove()");
+                _icon.setAttribute('id', "deleted-icon");
+                _icon.setAttribute('class', "small material-icons");
+                _icon.textContent = "highlight_off";
+
+                URL.revokeObjectURL(newImg)
+            }
+
+            document.getElementById('files').style.height = "0";
+            document.getElementById('file_label').style.display = "none";
+        };
+
+        function remove() {
+            let elem = document.getElementById("uploaded_image");
+
+            elem.parentElement.removeChild(elem);
+            document.getElementById('files').style.height = "auto";
+            document.getElementById('file_label').style.display = "block";
+        }
+    </script>
+{% endblock %}

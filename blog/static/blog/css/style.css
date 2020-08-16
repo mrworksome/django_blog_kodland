@@ -1,0 +1,61 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #315AF2;
+    position: relative;
+    display: inline-block;
+}
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: rgba(49, 90, 242, 0.75);
+}
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
+#output img {
+    position: relative;
+    display: inline-block;
+    z-index: 0;
+}
+#output a {
+    position: absolute;
+    top: 55px;
+    right: 64px;
+    z-index: 1;
+}
+
+#output a i {
+    font-size: 27px;
+    background-color: #e5e5e5;
+    border-radius: 24px;
+    height: auto;
+}
+
+.a.btn {
+	background-color: #3f51b5;
+	font-size: 16px;
+	line-height: 19px;
+	border-radius: 50px;
+}
+.post {
+    position: absolute;
+    width: 607px;
+    height: 1481px;
+    left: 417px;
+    top: 231px;
+}

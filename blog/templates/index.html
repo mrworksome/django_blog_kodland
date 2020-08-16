@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+    {% load static %}
+    <main>
+
+        <section class="container my-4">
+            <div class="row">
+                <div class="col">
+                    <ul class="list-unstyled d-flex flex-row my-3">
+                        <li class="px-2">
+                            <span class="red-text">&nbsp;&nbsp;NEW</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="media">
+                        {% for post in posts|slice:":1" %}
+                            <div class="media-body col-10">
+                                <h1 class="mt-0 font-weight-bold indigo-text mb-3">
+                                    {{ post.title }}
+                                </h1>
+                                <p class="w-responsive mb-3">
+                                    {% autoescape off %}
+                                        {{ post.about|truncatechars_html:500 }}{% endautoescape %}
+                                </p>
+                                <a href="{{ post.id }}"
+                                   class="nav-link indigo waves-effect waves-light text-white btn btn-lg rounded-0 indigo m-0 text-white mb-3 ">
+                                    Читать
+                                </a>
+                            </div>
+                            <img width="422px" height="464px"
+                                 class=" align-self-center mr-3 img-fluid"
+                                 src="/media/{{ post.image }}">
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="w-100 divider">
+
+        <section class="container my-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="list-unstyled d-flex flex-row justify-content-between my-3">
+                        <h2 class="mt-0 font-weight-bold indigo-text mb-3">
+                            Другие статьи
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for post in posts|slice:"1:10" %}
+                    <div class="col-12 col-sm-6 col-lg-4 my-2 d-flex align-items-stretch">
+                        <div class="card z-depth-0 p-3 border rounded-0 w-100">
+                            <a href="{{ post.id }}">
+                                <p class="small text-muted">
+                                    {{ post.created_date }}
+                                </p>
+                                <img width="217px" height="212px" src="/media/{{ post.image }}"
+                                     class="mx-5" alt="">
+                                <p class="text-center black-text font-weight-bolder my-2 small">
+                                    Профессии будущего
+                                </p>
+                                <h5 class="font-weight-bold indigo-text text-center w-75 mx-auto">
+                                    {{ post.title }}
+                                </h5>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if range is not Null %}
+                    {% for i in range %}
+                        <div class="col-12 col-sm-6 col-lg-4 my-2 d-flex align-items-stretch">
+                            <div class="card z-depth-0 p-3 border rounded-1 w-100">
+                                <p class="small text-muted">
+                                    скоро появится пост
+                                </p>
+                                <img width="217px" height="212px" class="mx-5" src="#" alt="">
+
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </section>
+
+    </main>
+{% endblock %}
+
